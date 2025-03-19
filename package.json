@@ -1,0 +1,8 @@
+{
+  "name": "s6-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:RazielSystems/s6-api.git",
+  "author": "Benito Perdomo Vergara <benito.perdomo.v@gmail.com>",
+  "license": "MIT"
+}
