@@ -1,20 +1,17 @@
 import { Request, Response } from 'express';
 import { paginationSchema } from '../schemas/record.schema';
-import RecordModel, { projection } from '../models/record.model';
+import RecordModel, { group, projection } from '../models/record.model';
 
 class RecordController {
   static queryRecords = async (req: Request, res: Response) => {
     try {
-      const { page, pageSize } = await paginationSchema.validate(req.query);
+      const { page, pageSize } = await paginationSchema.validate(req.body);
 
       const totalRows = await RecordModel.countDocuments();
-      //   const records = await RecordModel.find()
-      //     .select(projection)
-      //     .skip((page - 1) * pageSize)
-      //     .limit(pageSize);
 
-      const records = await RecordModel.find();
-      console.log('records: ', records);
+      const skip = { $skip: (page - 1) * pageSize };
+      const limit = { $limit: pageSize };
+      const records = await RecordModel.aggregate([{ $project: { _id: 0 } }, group, skip, limit, { $project: projection }]);
 
       return res.json({
         pagination: {

@@ -1,28 +1,46 @@
 import mongoose from 'mongoose';
 import config from './env';
+import debug from 'debug';
+
+const log: debug.IDebugger = debug('app:mongoose-service');
 
 class Database {
-  private static instance: Database;
-  private constructor() {
-    this.connect();
+  private count = 0;
+  private maxConnectTry = 10;
+  private url = config.MONGODB_URI;
+
+  private options = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 5000,
+    autoIndex: false
+  };
+
+  constructor() {
+    this.connectWithRetry();
   }
 
-  public static getInstance(): Database {
-    if (!Database.instance) {
-      Database.instance = new Database();
-    }
-    return Database.instance;
+  getDatabase() {
+    return mongoose;
   }
 
-  private async connect() {
-    try {
-      await mongoose.connect(config.MONGODB_URI);
-      console.log('Connected to MongoDB');
-    } catch (error) {
-      console.error('Database connection error:', error);
+  connectWithRetry = async () => {
+    if (this.count > this.maxConnectTry) {
       process.exit(1);
     }
-  }
+
+    log('Intentando conectar con MongoDB (se reintentará de ser necesario)');
+    mongoose
+      .connect(this.url, this.options)
+      .then(() => {
+        log('conectado a MongoDB');
+      })
+      .catch(err => {
+        const retrySeconds = 5;
+        log(`Conexión a MongoDB no satisfactoria (reintento #${++this.count} despues ${retrySeconds} segundos):`, err);
+        setTimeout(this.connectWithRetry, retrySeconds * 1000);
+      });
+  };
 }
 
-export default Database.getInstance();
+export default new Database();
