@@ -11,7 +11,8 @@ class RecordController {
 
       const skip = { $skip: (page - 1) * pageSize };
       const limit = { $limit: pageSize };
-      const records = await RecordModel.aggregate([{ $project: { _id: 0 } }, group, skip, limit, { $project: projection }]);
+      // const records = await RecordModel.aggregate([{ $project: { _id: 0 } }, group, skip, limit, { $project: projection }]);
+      const records = await RecordModel.aggregate([{ $project: { _id: 0 } }, skip, limit]);
 
       return res.json({
         pagination: {
