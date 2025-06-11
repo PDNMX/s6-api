@@ -7,5 +7,6 @@ export const RecordCreateSchema = yup.object({
 
 export const paginationSchema = yup.object({
   page: yup.number().min(1).default(1),
-  pageSize: yup.number().min(1).max(200).default(10)
+  pageSize: yup.number().min(1).max(200).default(10),
+  query: yup.object()
 });
