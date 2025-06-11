@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { paginationSchema } from '../schemas/record.schema';
-import RecordModel, { group, projection } from '../models/record.model';
+import RecordModel from '../models/record.model';
 
 class RecordController {
   static queryString = (cadena: String) => {
@@ -94,7 +94,6 @@ class RecordController {
 
       const skip = { $skip: (page - 1) * pageSize };
       const limit = { $limit: pageSize };
-      // const records = await RecordModel.aggregate([{ $project: { _id: 0 } }, group, skip, limit, { $project: projection }]);
       const records = await RecordModel.aggregate([{ $match: nQuery }, { $project: { _id: 0 } }, skip, limit]);
 
       return res.json({
