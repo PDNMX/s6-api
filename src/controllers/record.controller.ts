@@ -21,63 +21,63 @@ class RecordController {
 
   static prepareQuery(query: any) {
     // console.log('query: ', query);
-    const { ocid, awards, buyer, contracts, tender, parties } = query;
+
     let nQuery = {};
 
-    if (ocid && ocid !== '') {
-      nQuery = { ...nQuery, ['ocid']: this.queryString(ocid) };
+    if (query?.ocid && query?.ocid !== '') {
+      nQuery = { ...nQuery, ['ocid']: this.queryString(query?.ocid) };
     }
 
-    if (awards?.title && awards?.title !== '') {
-      nQuery = { ...nQuery, ['record.awards.title']: this.queryString(awards?.title) };
+    if (query?.awards?.title && query?.awards?.title !== '') {
+      nQuery = { ...nQuery, ['record.awards.title']: this.queryString(query?.awards?.title) };
     }
 
-    if (awards?.status && awards?.status !== '') {
-      nQuery = { ...nQuery, ['record.awards.status']: this.queryString(awards?.status) };
+    if (query?.awards?.status && query?.awards?.status !== '') {
+      nQuery = { ...nQuery, ['record.awards.status']: this.queryString(query?.awards?.status) };
     }
 
-    if (awards?.suppliers?.name && awards?.suppliers?.name !== '') {
-      nQuery = { ...nQuery, ['record.awards.suppliers.name']: this.queryString(awards?.suppliers?.name) };
+    if (query?.awards?.suppliers?.name && query?.awards?.suppliers?.name !== '') {
+      nQuery = { ...nQuery, ['record.awards.suppliers.name']: this.queryString(query?.awards?.suppliers?.name) };
     }
 
-    if (awards?.items?.description && awards?.items?.description !== '') {
-      nQuery = { ...nQuery, ['record.awards.items.description']: this.queryString(awards?.items?.description) };
+    if (query?.awards?.items?.description && query?.awards?.items?.description !== '') {
+      nQuery = { ...nQuery, ['record.awards.items.description']: this.queryString(query?.awards?.items?.description) };
     }
 
-    if (buyer?.name && buyer?.name !== '') {
-      nQuery = { ...nQuery, ['record.buyer.name']: this.queryString(buyer?.name) };
+    if (query?.buyer?.name && query?.buyer?.name !== '') {
+      nQuery = { ...nQuery, ['record.buyer.name']: this.queryString(query?.buyer?.name) };
     }
 
-    if (contracts?.title && contracts?.title !== '') {
-      nQuery = { ...nQuery, ['record.contracts.title']: this.queryString(contracts?.title) };
+    if (query?.contracts?.title && query?.contracts?.title !== '') {
+      nQuery = { ...nQuery, ['record.contracts.title']: this.queryString(query?.contracts?.title) };
     }
 
-    if (tender?.title && tender?.title !== '') {
-      nQuery = { ...nQuery, ['record.tender.title']: this.queryString(tender?.title) };
+    if (query?.tender?.title && query?.tender?.title !== '') {
+      nQuery = { ...nQuery, ['record.tender.title']: this.queryString(query?.tender?.title) };
     }
 
-    if (tender?.procurementMethod && tender?.procurementMethod !== '') {
-      nQuery = { ...nQuery, ['record.tender.procurementMethod']: this.queryString(tender?.procurementMethod) };
+    if (query?.tender?.procurementMethod && query?.tender?.procurementMethod !== '') {
+      nQuery = { ...nQuery, ['record.tender.procurementMethod']: this.queryString(query?.tender?.procurementMethod) };
     }
 
-    if (tender?.tenderPeriod?.startDate && tender?.tenderPeriod?.startDate !== '') {
-      nQuery = { ...nQuery, ['record.tender.tenderPeriod.startDate']: { $gte: tender?.tenderPeriod?.startDate } };
+    if (query?.tender?.tenderPeriod?.startDate && query?.tender?.tenderPeriod?.startDate !== '') {
+      nQuery = { ...nQuery, ['record.tender.tenderPeriod.startDate']: { $gte: query?.tender?.tenderPeriod?.startDate } };
     }
 
-    if (tender?.tenderPeriod?.endDate && tender?.tenderPeriod?.endDate !== '') {
-      nQuery = { ...nQuery, ['record.tender.tenderPeriod.endDate']: { $lte: tender?.tenderPeriod?.endDate } };
+    if (query?.tender?.tenderPeriod?.endDate && query?.tender?.tenderPeriod?.endDate !== '') {
+      nQuery = { ...nQuery, ['record.tender.tenderPeriod.endDate']: { $lte: query?.tender?.tenderPeriod?.endDate } };
     }
 
-    if (tender?.items?.description && tender?.items?.description !== '') {
-      nQuery = { ...nQuery, ['record.tender.items.description']: this.queryString(tender?.items?.description) };
+    if (query?.tender?.items?.description && query?.tender?.items?.description !== '') {
+      nQuery = { ...nQuery, ['record.tender.items.description']: this.queryString(query?.tender?.items?.description) };
     }
 
-    if (parties?.name && parties?.name !== '') {
-      nQuery = { ...nQuery, ['record.parties.name']: this.queryString(parties?.name) };
+    if (query?.parties?.name && query?.parties?.name !== '') {
+      nQuery = { ...nQuery, ['record.parties.name']: this.queryString(query?.parties?.name) };
     }
 
-    if (parties?.roles && parties?.roles !== '') {
-      nQuery = { ...nQuery, ['record.parties.roles']: { $in: [parties?.roles] } };
+    if (query?.parties?.roles && query?.parties?.roles !== '') {
+      nQuery = { ...nQuery, ['record.parties.roles']: { $in: [query?.parties?.roles] } };
     }
 
     // console.log('nQuery: ', nQuery);
