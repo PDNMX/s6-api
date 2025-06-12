@@ -13,7 +13,6 @@ const envSchema = yup
     JWT_ISSUER: yup.string().required('JWT IsUser is required'),
     JWT_EXPIRES_IN: yup.string().default('1d'),
     MONGODB_MAX_TRY_CONNECTION: yup.number().default(10),
-    API_S6_INSTITUCION: yup.string().required('API_S6_INSTITUCION is required'),
     API_S6_PREFIX: yup.string().required('API_S6_PREFIX is required')
   })
   .required();
@@ -30,7 +29,6 @@ try {
     JWT_ISSUER: process.env.JWT_ISSUER || 'pdn',
     JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN,
     MONGODB_MAX_TRY_CONNECTION: process.env.MONGODB_MAX_TRY_CONNECTION,
-    API_S6_INSTITUCION: process.env.API_S6_INSTITUCION,
     API_S6_PREFIX: process.env.API_S6_PREFIX
   });
 } catch (error: any) {
